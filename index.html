@@ -1,0 +1,582 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitLife - Fitness & Wellness</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <header>
+        <h2>FitLife</h2>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#profile">Profile</a>
+            <a href="#goals">Goals</a>
+            <a href="#activity">Activities</a>
+            <a href="#progress">Progress</a>
+            <a href="#scrum">Scrum Dashboard</a>
+            <a href="#userStories">User Stories</a>
+            <a href="#productBacklog">Product Backlog</a>
+            <a href="#scrumRoles">Scrum Roles</a>
+            <a href="#sprintPlanning">Sprint Planning</a>
+            <a href="#sprintBacklog">Sprint Backlog</a>
+            <a href="#planningPoker">Planning Poker</a>
+            <a href="#agileBoard">Agile Task Board</a>
+            <a href="#velocity">Velocity</a>
+            <a href="#sprintReview">Sprint Review</a>
+            <a href="#retrospective">Retrospective</a>
+            <a href="#acceptanceCriteria">Acceptance Criteria</a>
+            <a href="#definitionOfDone">Definition of Done</a>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <h1>Welcome to FitLife</h1>
+        <p>Your Fitness Journey Starts Here!</p>
+        <a href="#profile" class="btn">Get Started</a>
+    </section>
+
+    <section id="profile">
+        <h2>User Profile</h2>
+        <input id="username" placeholder="Enter your name">
+        <input id="age" type="number" placeholder="Enter your age">
+        <button onclick="saveProfile()">Save Profile</button>
+        <p id="profileResult"></p>
+    </section>
+
+    <section id="goals">
+    <h2>Fitness Goals</h2>
+
+    <input type="text" id="goal" placeholder="Enter your fitness goal">
+
+    <button onclick="addGoal()">Add Goal</button>
+
+    <ul id="goalList"></ul>
+</section>
+
+    
+<section id="activity">
+    <h2>Activity Tracking</h2>
+
+    <input id="activityName" placeholder="Enter activity">
+
+    <input id="duration" type="number"
+           placeholder="Duration in minutes">
+
+    <button onclick="addActivity()">Add Activity</button>
+
+    <ul id="activityList"></ul>
+</section>
+
+<section id="reminders">
+    <h2>Fitness Reminders</h2>
+
+    <input type="text" id="reminderText"
+           placeholder="Enter reminder">
+
+    <input type="datetime-local" id="reminderTime">
+
+    <button onclick="addReminder()">Set Reminder</button>
+
+    <ul id="reminderList"></ul>
+</section>
+
+    <section id="progress">
+        <h2>Progress Report</h2>
+        <canvas id="progressChart"></canvas>
+    </section>
+
+
+<!-- USER STORIES SECTION -->
+<section id="userStories">
+    <h2>User Stories</h2>
+    <p>Requirements from the user's perspective.</p>
+
+    <div class="story-container">
+        <div class="story">
+            <h3>US-01: User Profile</h3>
+            <p>As a user, I want to create my profile so that I can manage my personal information.</p>
+            <span>Priority: High</span>
+        </div>
+
+        <div class="story">
+            <h3>US-02: Fitness Goals</h3>
+            <p>As a user, I want to set fitness goals so that I can achieve my health targets.</p>
+            <span>Priority: High</span>
+        </div>
+
+        <div class="story">
+            <h3>US-03: Activity Tracking</h3>
+            <p>As a user, I want to track my activities so that I can monitor my workouts.</p>
+            <span>Priority: High</span>
+        </div>
+
+        <div class="story">
+            <h3>US-04: Reminders</h3>
+            <p>As a user, I want to receive reminders so that I do not miss my fitness schedule.</p>
+            <span>Priority: Medium</span>
+        </div>
+
+        <div class="story">
+            <h3>US-05: Progress Reports</h3>
+            <p>As a user, I want to view progress reports so that I can understand my fitness improvement.</p>
+            <span>Priority: Medium</span>
+        </div>
+    </div>
+</section>
+
+
+<!-- PRODUCT BACKLOG SECTION -->
+<section id="productBacklog">
+    <h2>Product Backlog</h2>
+    <p>Prioritized list of features to be developed.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Requirement</th>
+                <th>Priority</th>
+                <th>Story Points</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>PB-01</td>
+                <td>User Profile</td>
+                <td>High</td>
+                <td>5</td>
+            </tr>
+
+            <tr>
+                <td>PB-02</td>
+                <td>Fitness Goals</td>
+                <td>High</td>
+                <td>3</td>
+            </tr>
+
+            <tr>
+                <td>PB-03</td>
+                <td>Activity Tracking</td>
+                <td>High</td>
+                <td>5</td>
+            </tr>
+
+            <tr>
+                <td>PB-04</td>
+                <td>Fitness Reminders</td>
+                <td>Medium</td>
+                <td>3</td>
+            </tr>
+
+            <tr>
+                <td>PB-05</td>
+                <td>Progress Reports</td>
+                <td>Medium</td>
+                <td>8</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+<section id="acceptanceCriteria">
+    <h2>Acceptance Criteria</h2>
+
+    <div class="story-container">
+        <div class="story">
+            <h3>US-01: User Profile</h3>
+            <p>1. User can enter name, age and weight.</p>
+            <p>2. User can save profile details.</p>
+            <p>3. Saved details are displayed correctly.</p>
+        </div>
+
+        <div class="story">
+            <h3>US-02: Fitness Goals</h3>
+            <p>1. User can enter a fitness goal.</p>
+            <p>2. User can set a target.</p>
+            <p>3. Goal is saved and displayed.</p>
+        </div>
+
+        <div class="story">
+            <h3>US-03: Activity Tracking</h3>
+            <p>1. User can enter activity details.</p>
+            <p>2. User can enter workout duration.</p>
+            <p>3. Activity is saved and shown in the list.</p>
+        </div>
+
+        <div class="story">
+            <h3>US-04: Fitness Reminders</h3>
+            <p>1. User can enter a reminder.</p>
+            <p>2. User can select a reminder time.</p>
+            <p>3. Saved reminders are displayed.</p>
+        </div>
+
+        <div class="story">
+            <h3>US-05: Progress Reports</h3>
+            <p>1. User can view the progress chart.</p>
+            <p>2. Chart displays activity information.</p>
+            <p>3. Progress is updated when activities change.</p>
+        </div>
+    </div>
+</section>
+
+
+<section id="definitionOfDone">
+    <h2>Definition of Done</h2>
+
+    <div class="story">
+        <p>✓ Feature is implemented successfully.</p>
+        <p>✓ Input validation is completed.</p>
+        <p>✓ No major errors are found.</p>
+        <p>✓ Feature is tested successfully.</p>
+        <p>✓ Data is saved and displayed correctly.</p>
+        <p>✓ Code is reviewed and documented.</p>
+        <p>✓ Feature is ready for demonstration.</p>
+    </div>
+</section>
+
+<!-- SCRUM ROLES SECTION -->
+<section id="scrumRoles">
+    <h2>Scrum Team Roles</h2>
+
+    <div class="story-container">
+
+        <div class="story">
+            <h3>Product Owner</h3>
+            <p>Defines project requirements and manages the Product Backlog.</p>
+        </div>
+
+        <div class="story">
+            <h3>Scrum Master</h3>
+            <p>Manages Scrum activities and removes obstacles for the team.</p>
+        </div>
+
+        <div class="story">
+            <h3>Development Team</h3>
+            <p>Designs, develops, tests and delivers the application.</p>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- SPRINT PLANNING SECTION -->
+<section id="sprintPlanning">
+
+    <h2>Sprint Planning</h2>
+    <p>Our project is divided into three development sprints.</p>
+
+    <div class="story-container">
+
+        <div class="story">
+            <h3>Sprint 1</h3>
+            <p><b>Duration:</b> Week 1 - 2</p>
+            <p><b>Goal:</b> User Management</p>
+            <ul>
+                <li>Create User Profile</li>
+                <li>Set Fitness Goals</li>
+            </ul>
+            <p><b>Story Points:</b> 8</p>
+        </div>
+
+        <div class="story">
+            <h3>Sprint 2</h3>
+            <p><b>Duration:</b> Week 3 - 4</p>
+            <p><b>Goal:</b> Activity Management</p>
+            <ul>
+                <li>Track Activities</li>
+                <li>Set Fitness Reminders</li>
+            </ul>
+            <p><b>Story Points:</b> 8</p>
+        </div>
+
+        <div class="story">
+            <h3>Sprint 3</h3>
+            <p><b>Duration:</b> Week 5 - 6</p>
+            <p><b>Goal:</b> Progress Monitoring</p>
+            <ul>
+                <li>Generate Progress Reports</li>
+                <li>Testing and Feedback</li>
+            </ul>
+            <p><b>Story Points:</b> 13</p>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- SPRINT BACKLOG SECTION -->
+<section id="sprintBacklog">
+
+    <h2>Sprint Backlog</h2>
+    <p>Tasks selected by the development team for each sprint.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Sprint</th>
+                <th>Task</th>
+                <th>Assigned Role</th>
+                <th>Story Points</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>Sprint 1</td>
+                <td>User Profile</td>
+                <td>Developer</td>
+                <td>5</td>
+                <td>Completed</td>
+            </tr>
+
+            <tr>
+                <td>Sprint 1</td>
+                <td>Fitness Goals</td>
+                <td>Developer</td>
+                <td>3</td>
+                <td>Completed</td>
+            </tr>
+
+            <tr>
+                <td>Sprint 2</td>
+                <td>Activity Tracking</td>
+                <td>Developer</td>
+                <td>5</td>
+                <td>In Progress</td>
+            </tr>
+
+            <tr>
+                <td>Sprint 2</td>
+                <td>Fitness Reminders</td>
+                <td>Developer</td>
+                <td>3</td>
+                <td>In Progress</td>
+            </tr>
+
+            <tr>
+                <td>Sprint 3</td>
+                <td>Progress Reports</td>
+                <td>Developer</td>
+                <td>8</td>
+                <td>To Do</td>
+            </tr>
+
+            <tr>
+                <td>Sprint 3</td>
+                <td>Testing and Feedback</td>
+                <td>Testing Team</td>
+                <td>5</td>
+                <td>To Do</td>
+            </tr>
+        </tbody>
+    </table>
+
+</section>
+
+
+<!-- PLANNING POKER SECTION -->
+<section id="planningPoker">
+
+    <h2>Planning Poker – Story Point Estimation</h2>
+
+    <p>
+        The Scrum team estimates the complexity of tasks
+        using Planning Poker.
+    </p>
+
+    <div class="story-container">
+
+        <div class="story">
+            <h3>1 Story Point</h3>
+            <p>Very simple task</p>
+        </div>
+
+        <div class="story">
+            <h3>3 Story Points</h3>
+            <p>Simple task</p>
+        </div>
+
+        <div class="story">
+            <h3>5 Story Points</h3>
+            <p>Medium complexity</p>
+        </div>
+
+        <div class="story">
+            <h3>8 Story Points</h3>
+            <p>High complexity</p>
+        </div>
+
+        <div class="story">
+            <h3>13 Story Points</h3>
+            <p>Very high complexity</p>
+        </div>
+
+    </div>
+
+    <h3 style="margin-top:20px;">Sample Estimation</h3>
+
+    <p>User Profile: 5 points</p>
+    <p>Fitness Goals: 3 points</p>
+    <p>Activity Tracking: 5 points</p>
+    <p>Fitness Reminders: 3 points</p>
+    <p>Progress Reports: 8 points</p>
+
+</section>
+
+
+<!-- AGILE TASK BOARD -->
+<section id="agileBoard">
+
+    <h2>Agile Scrum Task Board</h2>
+    <p>Manage project tasks using the Scrum workflow.</p>
+
+    <div class="task-input">
+        <input type="text" id="taskName"
+               placeholder="Enter new task">
+
+        <select id="taskStatus">
+            <option value="todo">To Do</option>
+            <option value="progress">In Progress</option>
+            <option value="done">Done</option>
+        </select>
+
+        <button onclick="addTask()">Add Task</button>
+    </div>
+
+    <div class="board">
+
+        <div class="board-column">
+            <h3>To Do</h3>
+            <div id="todo" class="task-list"></div>
+        </div>
+
+        <div class="board-column">
+            <h3>In Progress</h3>
+            <div id="progress" class="task-list"></div>
+        </div>
+
+        <div class="board-column">
+            <h3>Done</h3>
+            <div id="done" class="task-list"></div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SPRINT VELOCITY -->
+<section id="velocity">
+
+    <h2>Sprint Velocity Dashboard</h2>
+
+    <p>Track completed work using Story Points.</p>
+
+    <div class="story-container">
+
+        <div class="story">
+            <h3>Completed Tasks</h3>
+            <h2 id="completedTasks">0</h2>
+        </div>
+
+        <div class="story">
+            <h3>Pending Tasks</h3>
+            <h2 id="pendingTasks">0</h2>
+        </div>
+
+        <div class="story">
+            <h3>Completion Rate</h3>
+            <h2 id="completionRate">0%</h2>
+        </div>
+
+    </div>
+
+    <h3 style="margin-top:25px;">Task Progress Chart</h3>
+    <canvas id="velocityChart"></canvas>
+
+</section>
+
+
+<!-- SPRINT REVIEW -->
+<section id="sprintReview">
+
+    <h2>Sprint Review</h2>
+
+    <p>Review completed work and collect feedback.</p>
+
+    <h3>Completed Features</h3>
+
+    <ul>
+        <li>User Profile Management</li>
+        <li>Fitness Goal Management</li>
+        <li>Activity Tracking</li>
+        <li>Fitness Reminders</li>
+        <li>Progress Reports</li>
+    </ul>
+
+    <h3>Customer Feedback</h3>
+
+    <textarea id="reviewFeedback"
+        placeholder="Enter customer feedback"></textarea>
+
+    <br>
+
+    <button onclick="saveReview()">Submit Feedback</button>
+
+    <p id="reviewResult"></p>
+
+</section>
+
+
+<!-- SPRINT RETROSPECTIVE -->
+<section id="retrospective">
+
+    <h2>Sprint Retrospective</h2>
+
+    <p>Identify what went well and what needs improvement.</p>
+
+    <label>What went well?</label>
+    <textarea id="wentWell"
+        placeholder="Enter positive points"></textarea>
+
+    <label>What needs improvement?</label>
+    <textarea id="improvement"
+        placeholder="Enter improvement points"></textarea>
+
+    <label>Action plan for next sprint</label>
+    <textarea id="actionPlan"
+        placeholder="Enter action plan"></textarea>
+
+    <br>
+
+    <button onclick="saveRetrospective()">
+        Save Retrospective
+    </button>
+
+    <p id="retroResult"></p>
+
+</section>
+
+    <section id="scrum">
+        <h2>Agile Scrum Dashboard</h2>
+        <p>Project: Fitness and Wellness Application</p>
+        <p>Methodology: Agile Scrum</p>
+        <div id="scrumDetails"></div>
+    </section>
+
+    <footer>
+        <p>FitLife - Fitness & Wellness Application</p>
+        <p>Developed using Agile Scrum Methodology</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
