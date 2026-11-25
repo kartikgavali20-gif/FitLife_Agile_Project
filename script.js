@@ -4,22 +4,51 @@ let goals = JSON.parse(localStorage.getItem("goals")) || [];
 let activities = JSON.parse(localStorage.getItem("activities")) || [];
 let reminders = JSON.parse(localStorage.getItem("reminders")) || [];
 
-// Save and display profile
-function saveProfile() {
-    let name = document.getElementById("username").value;
-    let age = document.getElementById("age").value;
+
+// Save user profile in SQLite database
+async function saveProfile() {
+    const name = document.getElementById("username").value.trim();
+    const age = document.getElementById("age").value;
 
     if (!name || !age || Number(age) <= 0) {
         alert("Please enter valid details");
         return;
     }
 
-    localStorage.setItem("username", name);
-    localStorage.setItem("age", age);
+    try {
+        const response = await fetch(
+            "http://127.0.0.1:5000/api/users",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ name, age })
+            }
+        );
 
-    document.getElementById("profileResult").innerText =
-        "Welcome " + name + "! Age: " + age;
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || "Profile not saved");
+        }
+
+        // Remember the registered user
+        localStorage.setItem("user_id", data.id);
+        localStorage.setItem("username", name);
+        localStorage.setItem("age", age);
+
+        document.getElementById("profileResult").innerText =
+            "Welcome " + name + "! Age: " + age;
+
+        alert("Profile saved successfully!");
+
+    } catch (error) {
+        alert(error.message);
+        console.error(error);
+    }
 }
+
 
 // ADD FITNESS GOAL TO DATABASE
 async function addGoal() {
@@ -42,7 +71,7 @@ async function addGoal() {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.error || "Could not save goal");
+           throw new Error(data.error || "Could not save goal");
         }
 
         alert("Goal saved to database!");
@@ -710,3 +739,22 @@ updateVelocity();
 
 displayGoals();
 displayReminders();
+
+
+// Get currently saved user ID
+function getCurrentUserId() {
+    return localStorage.getItem("user_id");
+}
+
+// Display saved profile when website opens
+window.addEventListener("DOMContentLoaded", function () {
+
+    const name = localStorage.getItem("username");
+    const age = localStorage.getItem("age");
+
+    if (name && age) {
+        document.getElementById("profileResult").innerText =
+            "Welcome " + name + "! Age: " + age;
+    }
+
+});

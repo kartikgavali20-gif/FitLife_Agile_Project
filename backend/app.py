@@ -58,6 +58,18 @@ def create_database():
         )
     """)
 
+
+    # Create feedback table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS feedback (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            rating INTEGER NOT NULL,
+            comment TEXT NOT NULL,
+            user_id INTEGER,
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        )
+    """)
+
     conn.commit()
     conn.close()
 
@@ -100,33 +112,6 @@ def get_goals():
     conn.close()
 
     return jsonify([dict(goal) for goal in goals])
-
-
-# POST: Add a fitness goal
-@app.route("/api/goals", methods=["POST"])
-def add_goal():
-    data = request.get_json(silent=True) or {}
-    goal = data.get("goal", "").strip()
-
-    if not goal:
-        return jsonify({"error": "Goal cannot be empty"}), 400
-
-    conn = get_db_connection()
-
-    cursor = conn.execute(
-        "INSERT INTO goals (goal) VALUES (?)",
-        (goal,)
-    )
-
-    conn.commit()
-    goal_id = cursor.lastrowid
-    conn.close()
-
-    return jsonify({
-        "message": "Goal added successfully!",
-        "id": goal_id,
-        "goal": goal
-    }), 201
 
 
 # PUT: Edit a fitness goal
@@ -337,6 +322,50 @@ def delete_reminder(reminder_id):
         return jsonify({"error": "Reminder not found"}), 404
 
     return jsonify({"message": "Reminder deleted successfully!"})
+
+# POST: Save user profile to SQLite database
+@app.route("/api/users", methods=["POST"])
+def save_user():
+    data = request.get_json(silent=True) or {}
+
+    name = str(data.get("name", "")).strip()
+
+    try:
+        age = int(data.get("age"))
+    except (TypeError, ValueError):
+        return jsonify({"error": "Please enter a valid age"}), 400
+
+    if not name or age <= 0:
+        return jsonify({"error": "Enter valid name and age"}), 400
+
+    conn = get_db_connection()
+
+    cursor = conn.execute(
+        "INSERT INTO users (name, age) VALUES (?, ?)",
+        (name, age)
+    )
+
+    conn.commit()
+    user_id = cursor.lastrowid
+    conn.close()
+
+    return jsonify({
+        "message": "Profile saved successfully!",
+        "id": user_id
+    }), 201
+
+# GET: Display saved user profiles
+@app.route("/api/users", methods=["GET"])
+def get_users():
+    conn = get_db_connection()
+
+    users = conn.execute(
+        "SELECT * FROM users ORDER BY id DESC"
+    ).fetchall()
+
+    conn.close()
+
+    return jsonify([dict(user) for user in users])
 
 if __name__ == "__main__":
     create_database()
